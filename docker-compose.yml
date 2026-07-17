@@ -1,0 +1,16 @@
+
+version: '3.9'
+
+services:
+
+  tamp-education:
+
+    build: .
+
+    container_name: tamp-education
+
+    restart: unless-stopped
+
+    ports:
+
+      - "8080:80"
