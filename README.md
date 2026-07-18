@@ -51,28 +51,3 @@ Jenkins
 Nginx
 Git
 GitHub
-
-
-Folder Structure
-
-tamp-education-platform/
-│
-├── index.html
-├── Dockerfile
-├── docker-compose.yml
-├── nginx.conf
-├── Jenkinsfile
-├── README.md
-│
-├── assets/
-│   ├── css/
-│   ├── js/
-│   ├── images/
-│   ├── icons/
-│   └── fonts/
-Design
-Font Awesome
-CSS Animations
-Responsive Layout
-Flexbox
-CSS Grid
