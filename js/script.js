@@ -298,40 +298,6 @@ window.addEventListener("load", revealSections);
 
 
 //==============================
-// BACK TO TOP
-//==============================
-
-const backTop=document.getElementById("backTop");
-
-window.addEventListener("scroll",()=>{
-
-    if(window.scrollY>500){
-
-        backTop.style.display="block";
-
-    }
-
-    else{
-
-        backTop.style.display="none";
-
-    }
-
-});
-
-backTop.onclick=()=>{
-
-    window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
-
-    });
-
-};
-
-//==============================
 // SCROLL PROGRESS BAR
 //==============================
 
@@ -348,18 +314,255 @@ document.getElementById("progressBar").style.width=progress+"%";
 });
 
 
-const form=document.querySelector("form");
+
+
+
+
+
+const form = document.getElementById("form");
 
 if(form){
 
-form.addEventListener("submit",(e)=>{
+    form.addEventListener("submit", async function(e){
 
-e.preventDefault();
+        e.preventDefault();
 
-document.getElementById("successMessage").style.display="block";
+        const button = form.querySelector(".contact-btn");
+        const original = button.innerHTML;
 
-form.reset();
+        button.disabled = true;
+        button.innerHTML = "Sending...";
+
+        const formData = new FormData(form);
+
+        try{
+
+            const response = await fetch(
+                "https://api.web3forms.com/submit",
+                {
+                    method:"POST",
+                    body:formData
+                }
+            );
+
+            const result = await response.json();
+
+            if(result.success){
+
+                alert("Message sent successfully!");
+
+                form.reset();
+
+            }else{
+
+                alert(result.message);
+
+            }
+
+        }catch(error){
+
+            alert("Unable to send message.");
+
+        }
+
+        button.disabled = false;
+        button.innerHTML = original;
+
+    });
+
+}
+
+
+
+
+
+
+
+
+
+
+
+// Automatically update copyright year
+
+document.addEventListener("DOMContentLoaded", () => {
+    const year = document.getElementById("currentYear");
+
+    if (year) {
+        year.textContent = new Date().getFullYear();
+    }
+});
+
+
+
+
+
+    /*==============================================
+            INPUT FOCUS EFFECT
+    ==============================================*/
+
+    const inputs = document.querySelectorAll(
+
+        ".contact-form input, .contact-form textarea, .contact-form select"
+
+    );
+
+    inputs.forEach((input) => {
+
+        input.addEventListener("focus", () => {
+
+            input.parentElement.classList.add("active");
+
+        });
+
+        input.addEventListener("blur", () => {
+
+            if (input.value.trim() === "") {
+
+                input.parentElement.classList.remove("active");
+
+            }
+
+        });
+
+    });
+
+
+    
+/*=========================================
+        CUSTOM SELECT DROPDOWN
+=========================================*/
+
+document.querySelectorAll(".custom-select").forEach(selectWrapper => {
+
+    const select = selectWrapper.querySelector("select");
+
+    // Selected item
+    const selected = document.createElement("div");
+    selected.className = "select-selected";
+    selected.textContent =
+        select.options[select.selectedIndex].text;
+
+    selectWrapper.appendChild(selected);
+
+    // Dropdown list
+    const optionList = document.createElement("div");
+    optionList.className = "select-items select-hide";
+
+    for (let i = 1; i < select.options.length; i++) {
+
+        const option = document.createElement("div");
+
+        option.textContent = select.options[i].text;
+
+        option.addEventListener("click", function () {
+
+            select.selectedIndex = i;
+
+            selected.textContent = this.textContent;
+
+            optionList.querySelectorAll(".same-as-selected")
+                .forEach(el => el.classList.remove("same-as-selected"));
+
+            this.classList.add("same-as-selected");
+
+            optionList.classList.add("select-hide");
+
+            selected.classList.remove("select-arrow-active");
+
+        });
+
+        optionList.appendChild(option);
+
+    }
+
+    selectWrapper.appendChild(optionList);
+
+    selected.addEventListener("click", function (e) {
+
+        e.stopPropagation();
+
+        closeAllSelect(this);
+
+        optionList.classList.toggle("select-hide");
+
+        this.classList.toggle("select-arrow-active");
+
+    });
 
 });
 
+
+function closeAllSelect(elmnt) {
+
+    document.querySelectorAll(".select-items").forEach(list => {
+
+        if (list.previousSibling !== elmnt) {
+
+            list.classList.add("select-hide");
+
+        }
+
+    });
+
+    document.querySelectorAll(".select-selected").forEach(item => {
+
+        if (item !== elmnt) {
+
+            item.classList.remove("select-arrow-active");
+
+        }
+
+    });
+
 }
+
+document.addEventListener("click", closeAllSelect);
+
+
+
+
+
+
+const counters = document.querySelectorAll(".counter");
+
+const observer = new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+        if(entry.isIntersecting){
+
+            const counter = entry.target;
+
+            const target = Number(counter.dataset.target);
+
+            let current = 0;
+
+            const timer = setInterval(()=>{
+
+                current += Math.ceil(target / 100);
+
+                if(current >= target){
+
+                    counter.textContent = target;
+
+                    clearInterval(timer);
+
+                }else{
+
+                    counter.textContent = current;
+
+                }
+
+            },20);
+
+            observer.unobserve(counter);
+
+        }
+
+    });
+
+});
+
+counters.forEach(counter=>observer.observe(counter));
+
+
