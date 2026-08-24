@@ -113,44 +113,104 @@ const prevBtn=document.querySelector(".prev");
 const nextBtn=document.querySelector(".next");
 
 
-let currentCategory="dance";
-let currentImage=0;
+let currentCategory = "dance";
+let currentImage = 0;
+let galleryVisibleCount = 4;
 
-function loadGallery(category){
+function loadGallery(category) {
 
+    galleryGrid.innerHTML = "";
 
-galleryGrid.innerHTML="";
+    const photos = galleryData[category];
+    const visiblePhotos = photos.slice(0, galleryVisibleCount);
 
+    visiblePhotos.forEach((photo, index) => {
 
-galleryData[category].forEach((photo,index)=>{
+        galleryGrid.innerHTML += `
+            <div class="gallery-item" onclick="openLightbox('${category}',${index})">
 
-galleryGrid.innerHTML+=`
+                <img
+                    src="${photo.image}"
+                    alt="${photo.title}"
+                    loading="lazy"
+                >
 
-<div class="gallery-item" onclick="openLightbox('${category}',${index})">
+                <div class="gallery-overlay">
 
-<img src="${photo.image}" alt="${photo.title}">
+                    <h4>${photo.title}</h4>
 
-<div class="gallery-overlay">
+                    <p>${photo.desc}</p>
 
-<h4>${photo.title}</h4>
+                </div>
 
-<p>${photo.desc}</p>
+            </div>
+        `;
 
-</div>
+    });
 
-</div>
+    updateViewMoreButton();
+}
 
-`;
+function updateViewMoreButton() {
 
-});
+    const viewMoreBtn = document.getElementById("viewMoreBtn");
 
+    if (!viewMoreBtn) return;
+
+    const totalPhotos = galleryData[currentCategory].length;
+
+    if (galleryVisibleCount >= totalPhotos) {
+
+        viewMoreBtn.textContent = "View Less ↑";
+
+    } else {
+
+        viewMoreBtn.textContent = "View More Photos →";
+
+    }
 }
 
 loadGallery(currentCategory);
 
+const viewMoreBtn = document.getElementById("viewMoreBtn");
+
+if (viewMoreBtn) {
+
+    viewMoreBtn.addEventListener("click", () => {
+
+        const totalPhotos = galleryData[currentCategory].length;
+
+        if (galleryVisibleCount >= totalPhotos) {
+
+            galleryVisibleCount = 4;
+
+        } else {
+
+            galleryVisibleCount = totalPhotos;
+
+        }
+
+        loadGallery(currentCategory);
+
+    });
+
+}
+
 tabs.forEach(tab=>{
 
 tab.addEventListener("click",()=>{
+
+    tabs.forEach(btn => btn.classList.remove("active"));
+
+    tab.classList.add("active");
+
+    currentCategory = tab.dataset.category;
+
+    galleryVisibleCount = 4;
+
+    loadGallery(currentCategory);
+
+});
 
 tabs.forEach(btn=>btn.classList.remove("active"));
 
@@ -161,8 +221,6 @@ tab.classList.add("active");
 currentCategory=tab.dataset.category;
 
 loadGallery(currentCategory);
-
-});
 
 });
 

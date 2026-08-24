@@ -1,0 +1,23 @@
+TAMP EDUCATION BLOG — INSTALLATION
+
+Do NOT create another index.html.
+
+Put these four files in the SAME folder as the existing TAMP Education index.html:
+  blog.html
+  blog.css
+  blog.js
+  blog-posts.js
+
+In the EXISTING index.html, add this navigation item immediately after Programs:
+  <li><a href="blog.html">Blog</a></li>
+
+If the footer has Quick Links, also add:
+  <li><a href="blog.html">Blog</a></li>
+
+The blog uses your existing:
+  images/logo.png
+  images/favicon.png
+
+Do not change your existing index.html structure except for the Blog link(s).
+The blog contains 45 posts: 15 Parents, 15 Schools, 15 Adults.
+It includes audience filters, category filters, keyword search, article reading modal, mobile navigation and conversion CTAs.
