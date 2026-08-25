@@ -1,0 +1,89 @@
+name: TAMP Education CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+
+  security-and-build:
+
+    name: Build and Security Scan
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # ==========================================
+      # 1. Checkout repository
+      # ==========================================
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+
+      # ==========================================
+      # 2. Set up Docker Buildx
+      # ==========================================
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+
+      # ==========================================
+      # 3. Build Docker image
+      # ==========================================
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            --tag tamp-education:${{ github.sha }} \
+            .
+
+
+      # ==========================================
+      # 4. Scan Dockerfile
+      # ==========================================
+
+      - name: Trivy Dockerfile scan
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          scan-type: config
+          scan-ref: Dockerfile
+          severity: HIGH,CRITICAL
+          exit-code: 1
+
+
+      # ==========================================
+      # 5. Scan Docker image
+      # ==========================================
+
+      - name: Trivy image vulnerability scan
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          image-ref: tamp-education:${{ github.sha }}
+          format: table
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: 1
+
+
+      # ==========================================
+      # 6. Scan Kubernetes manifests
+      # ==========================================
+
+      - name: Trivy Kubernetes scan
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          scan-type: config
+          scan-ref: k8s/
+          severity: HIGH,CRITICAL
+          exit-code: 1
