@@ -1,8 +1,12 @@
 # Use the official lightweight Nginx image
 FROM nginx:alpine
 
+# Update Alpine packages to the latest security fixes
+RUN apk upgrade --no-cache
+
 # Remove the default Nginx website
 RUN rm -rf /usr/share/nginx/html/*
+
 
 # Copy website files
 COPY . /usr/share/nginx/html
