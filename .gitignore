@@ -7,3 +7,5 @@
 # Temporary files
 *.tmp
 *.swp
+# Cloudflare Wrangler
+.wrangler/
