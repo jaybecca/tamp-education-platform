@@ -356,3 +356,42 @@ text-align:center;
 }
 
 }
+
+
+/* ========================================
+   TESTIMONIAL IMAGE CROPPING
+======================================== */
+
+.testimonial-card img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    object-position: center center;
+}
+
+
+/* ========================================
+   THIRD TESTIMONIAL
+   FACE-FOCUSED CROP
+======================================== */
+
+.testimonial-card:nth-child(3) img {
+    object-position: center 25%;
+}
+
+
+/* ========================================
+   MOBILE TESTIMONIAL IMAGES
+======================================== */
+
+@media (max-width: 900px) {
+
+    .testimonial-card img {
+        height: 240px;
+    }
+
+    .testimonial-card:nth-child(3) img {
+        object-position: center 20%;
+    }
+
+}
