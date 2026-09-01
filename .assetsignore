@@ -1,0 +1,26 @@
+# Git repository
+.git/
+.github/
+
+# Local development
+.wrangler/
+.vscode/
+
+# Kubernetes / CI / container files
+k8s/
+Dockerfile
+docker-compose.yml
+Jenkinsfile
+
+# Documentation / configuration not intended as public website assets
+README.md
+INSTALL.txt
+.gitignore
+.dockerignore
+wrangler.jsonc
+.assetsignore
+nginx.conf
+
+# macOS files
+.DS_Store
+**/.DS_Store

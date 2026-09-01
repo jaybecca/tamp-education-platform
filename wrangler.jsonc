@@ -2,23 +2,6 @@
   "name": "tamp-education-platform",
   "compatibility_date": "2026-08-31",
   "assets": {
-    "directory": ".",
-    "exclude": [
-      ".git/**",
-      ".github/**",
-      ".vscode/**",
-      ".wrangler/**",
-      "k8s/**",
-      "Dockerfile",
-      "docker-compose.yml",
-      "Jenkinsfile",
-      "README.md",
-      "INSTALL.txt",
-      ".gitignore",
-      ".dockerignore",
-      "nginx.conf",
-      ".DS_Store",
-      "**/.DS_Store"
-    ]
+    "directory": "."
   }
 }
