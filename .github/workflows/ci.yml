@@ -27,7 +27,7 @@ jobs:
       # ==========================================
 
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
 
       # ==========================================
@@ -35,7 +35,7 @@ jobs:
       # ==========================================
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4
+        uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4
 
 
       # ==========================================
@@ -54,7 +54,7 @@ jobs:
       # ==========================================
 
       - name: Trivy Dockerfile scan
-        uses: aquasecurity/trivy-action@v0.36.0
+        uses: aquasecurity/trivy-action@a9c7b0f06e461e9d4b4d1711f154ee024b8d7ab8 # v0.36.0
         with:
           scan-type: config
           scan-ref: Dockerfile
@@ -67,7 +67,7 @@ jobs:
       # ==========================================
 
       - name: Trivy image vulnerability scan
-        uses: aquasecurity/trivy-action@v0.36.0
+        uses: aquasecurity/trivy-action@a9c7b0f06e461e9d4b4d1711f154ee024b8d7ab8 # v0.36.0
         with:
           image-ref: tamp-education:${{ github.sha }}
           format: table
@@ -81,7 +81,7 @@ jobs:
       # ==========================================
 
       - name: Trivy Kubernetes scan
-        uses: aquasecurity/trivy-action@v0.36.0
+        uses: aquasecurity/trivy-action@a9c7b0f06e461e9d4b4d1711f154ee024b8d7ab8 # v0.36.0
         with:
           scan-type: config
           scan-ref: k8s/
@@ -93,7 +93,7 @@ jobs:
       # ==========================================
 
       - name: Trivy secret scan
-        uses: aquasecurity/trivy-action@v0.36.0
+        uses: aquasecurity/trivy-action@a9c7b0f06e461e9d4b4d1711f154ee024b8d7ab8 # v0.36.0
         with:
           scan-type: fs
           scan-ref: .
