@@ -9,7 +9,18 @@ RUN rm -rf /usr/share/nginx/html/*
 
 
 # Copy website files
-COPY . /usr/share/nginx/html
+COPY 404.html /usr/share/nginx/html/404.html
+COPY blog-posts.js /usr/share/nginx/html/blog-posts.js
+COPY blog.css /usr/share/nginx/html/blog.css
+COPY blog.html /usr/share/nginx/html/blog.html
+COPY blog.js /usr/share/nginx/html/blog.js
+COPY css /usr/share/nginx/html/css
+COPY images /usr/share/nginx/html/images
+COPY index.html /usr/share/nginx/html/index.html
+COPY js /usr/share/nginx/html/js
+COPY robots.txt /usr/share/nginx/html/robots.txt
+COPY site.webmanifest /usr/share/nginx/html/site.webmanifest
+COPY sitemap.xml /usr/share/nginx/html/sitemap.xml
 
 # Copy custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
