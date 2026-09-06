@@ -2,7 +2,8 @@
 FROM nginx:alpine
 
 # Update Alpine packages to the latest security fixes
-RUN apk upgrade --no-cache
+RUN apk upgrade --no-cache && \
+    apk add --no-cache --upgrade util-linux libuuid
 
 # Remove the default Nginx website
 RUN rm -rf /usr/share/nginx/html/*

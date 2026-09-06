@@ -101,3 +101,5 @@ jobs:
           format: table
           exit-code: 1
           skip-dirs: .git
+
+# CI security pipeline
