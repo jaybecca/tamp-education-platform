@@ -80,25 +80,21 @@
 
     <div class="blog-tools">
       <div class="search-box">
-        <span>⌕</span>
-      
-    <input
-        id="blogSearch"
-        type="text"
-        placeholder="Search ballet, schools, Lagos, chess, parenting..."
-        aria-label="Search blog articles"
-    >
-
-    <button id="searchButton" type="button">Search</button>
-</div>
+        <button class="search-icon" id="searchIcon" type="button" aria-label="Focus search">⌕</button>
+        <input
+          id="blogSearch"
+          type="text"
+          placeholder="Search ballet, schools, Lagos, chess, parenting..."
+          aria-label="Search blog articles"
+        >
       </div>
-      <div class="category-select-wrap">
-    <label for="categorySelect class=category-label">Filter by category</label>
 
-    <select id="categorySelect" aria-label="Filter articles by category">
-        <option value="All">All Categories</option>
-    </select>
-</div>
+      <div class="category-select-wrap">
+        <label for="categorySelect" class="category-label">Filter by category</label>
+        <select id="categorySelect" aria-label="Filter articles by category">
+          <option value="All">All Categories</option>
+        </select>
+      </div>
     </div>
 
     <p class="results-line" id="resultsLine"></p>
