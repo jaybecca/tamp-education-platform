@@ -30,6 +30,16 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
 
+      - name: Validate event campaign files
+        run: |
+          test -s worker.js
+          test -s events.html
+          test -s events-admin.html
+          node --check worker.js
+          node --check events.js
+          node --check events-admin.js
+          node -e "JSON.parse(require('fs').readFileSync('wrangler.jsonc', 'utf8'))"
+
       # ==========================================
       # 2. Set up Docker Buildx
       # ==========================================
