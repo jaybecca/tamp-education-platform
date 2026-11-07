@@ -1,0 +1,18 @@
+(() => {
+ const $=s=>document.querySelector(s), esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ const media=key=>"/api/media/"+encodeURIComponent(key);
+ async function init(){
+  const root=$("#eventMain");
+  try{
+   const res=await fetch("/api/events"); const data=await res.json();
+   if(!res.ok) throw new Error(data.error||"Could not load the event.");
+   if(!data.published){root.innerHTML='<section class="ev-empty"><span class="ev-kicker">TAMP EDUCATION EVENTS</span><h1>Something exciting is coming.</h1><p>Our next camp, workshop or special event will be announced here.</p><a class="ev-btn" href="index.html#contact">Talk to our team</a></section>';return;}
+   const e=data.event, images=(e.images||[]).map((key,i)=>'<img src="'+media(esc(key))+'" alt="TAMP Education event photo '+(i+1)+'" loading="lazy">').join("");
+   const video=e.video?'<div class="ev-video"><video controls playsinline preload="metadata" src="'+media(esc(e.video))+'"></video><p class="ev-lead">A little preview of the experience.</p></div>':"";
+   const facts=[["When",e.dates],["Where",e.location],["Programme fee",e.fee],["Registration", "Now open"]].filter(x=>x[1]);
+   const wa="https://wa.me/"+(e.whatsapp||"2347062581727")+"?text="+encodeURIComponent("Hello TAMP Education, I would like to enquire about "+e.title+".");
+   root.innerHTML='<section class="ev-hero"><div class="ev-copy"><span class="ev-kicker">'+esc(e.eyebrow||"TAMP EDUCATION PRESENTS")+'</span><h1>'+esc(e.title)+'</h1><p>'+esc(e.description)+'</p><div class="ev-meta">'+facts.slice(0,3).map(x=>'<span>'+esc(x[0])+': '+esc(x[1])+'</span>').join("")+'</div><a class="ev-btn gold" href="'+wa+'" target="_blank" rel="noopener">'+esc(e.ctaText||"Register / Enquire")+' ↗</a></div><div class="ev-hero-media">'+(e.images?.length?'<img src="'+media(esc(e.images[0]))+'" alt="'+esc(e.title)+'" fetchpriority="high">':'<div class="placeholder">Your event photos will appear here</div>')+'</div></section><section class="ev-section"><div class="ev-wrap ev-details"><div><span class="ev-kicker">MAKE THE HOLIDAYS COUNT</span><h2>Big experiences. Bright futures.</h2><p class="ev-lead">'+esc(e.description)+'</p><div class="ev-activities">'+String(e.activities||"").split(/[,\n]+/).filter(Boolean).map(x=>'<span>'+esc(x.trim())+'</span>').join("")+'</div></div><div class="ev-facts">'+facts.map(x=>'<div class="fact"><small>'+esc(x[0])+'</small><strong>'+esc(x[1])+'</strong></div>').join("")+'</div></div></section>'+(images?'<section class="ev-section ev-gallery"><div class="ev-wrap"><span class="ev-kicker">THE EXPERIENCE</span><h2>See what awaits.</h2><div class="ev-gallery-grid">'+images+'</div>'+video+'</div></section>':video?'<section class="ev-section ev-gallery"><div class="ev-wrap">'+video+'</div></section>':"")+'<section class="ev-contact" id="eventContact"><span class="ev-kicker">SPACES MAY BE LIMITED</span><h2>Let the adventure begin.</h2><p>Send us a message to ask questions or reserve a place.</p><a class="ev-btn gold" href="'+wa+'" target="_blank" rel="noopener">'+esc(e.ctaText||"Register / Enquire")+' on WhatsApp ↗</a></section>';
+  }catch(error){root.innerHTML='<section class="ev-empty"><h1>We could not load this event.</h1><p>Please refresh or contact TAMP Education.</p></section>';}
+ }
+ document.readyState==="loading"?document.addEventListener("DOMContentLoaded",init):init();
+})();
